@@ -1,0 +1,25 @@
+{
+  "name": "real-time-pdf-summarization",
+  "version": "1.0.0",
+  "description": "This is a real time pdf summarization application to test the real time communication.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/H-Qamar-Uddin/Real-Time-PDF-Summarization.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/H-Qamar-Uddin/Real-Time-PDF-Summarization/issues"
+  },
+  "homepage": "https://github.com/H-Qamar-Uddin/Real-Time-PDF-Summarization#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "pdf-parse": "^1.1.1",
+    "socket.io": "^4.7.5"
+  }
+}
