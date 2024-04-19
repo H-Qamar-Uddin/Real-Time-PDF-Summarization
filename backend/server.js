@@ -1,35 +1,41 @@
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
-const parsePdf = require('pdf-parse');
-
-const PORT = process.env.PORT || 3000;
+const socketIO = require('socket.io');
+const pdf = require('pdf-parse'); // Example PDF parsing library
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIO(server);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+  res.send('Server is running on port ' + PORT);
+});
 
 io.on('connection', (socket) => {
   console.log('A user connected');
 
   socket.on('upload', (data) => {
-    const { fileName, fileData } = data;
-    const buffer = Buffer.from(fileData, 'base64');
+    const { fileData } = data;
 
-    parsePdf(buffer).then((data) => {
-      const text = data.text;
-      io.emit('summarize the pdf', { fileName, summary: text });
+    // Example: Extract text from PDF file
+    pdf(Buffer.from(fileData, 'base64')).then((data) => {
+      const summary = {
+        model1: 'Example Model 1 Summary',
+        model2: 'Example Model 2 Summary',
+      };
+
+      // Emit the summary to the client
+      io.emit('summarize', summary);
     });
   });
 
   socket.on('disconnect', () => {
-    console.log('A user disconnected');
+    console.log('User disconnected');
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
